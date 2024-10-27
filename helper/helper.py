@@ -1,4 +1,6 @@
 from click import style
+import click
+import platform
 from tqdm import tqdm
 import fanficfare
 import os
@@ -75,3 +77,29 @@ def save_to_file(file_name=None, file_data=None):
         return
 
     return file_path
+
+def open_in_editor(filename):
+    # Prompt for filename if not provided
+    if not filename:
+        filename = click.prompt("Please enter the filename to open", type=str)
+
+    # Check if the file exists, create it if not
+    if not os.path.exists(filename):
+        with open(filename, 'w') as f:
+            f.write("")  # Create an empty file
+        click.echo(f"Created a new file: {filename}")
+
+    # Open the file with the default editor based on OS
+    try:
+        if platform.system() == "Windows":
+            os.startfile(filename)
+        elif platform.system() == "Darwin":  # macOS
+            subprocess.run(["open", filename])
+        else:  # Linux and other UNIX-based systems
+            subprocess.run(["xdg-open", filename])
+    except Exception as e:
+        click.echo(f"Error opening file: {e}")
+
+def rich_prompt(prompt_text, style="bold cyan"):
+    console.print(f"[{style}]{prompt_text}[/{style}]", end=" ")
+    return input()  # Capture input after the styled prompt

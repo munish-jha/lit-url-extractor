@@ -1,3 +1,5 @@
 click
 fanficfare
 tqdm
+requests
+rich

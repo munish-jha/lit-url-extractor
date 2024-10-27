@@ -1,12 +1,10 @@
 import click
-from click import prompt
-
 from helper.helper import *
 import requests
 from packaging import version
 
 PACKAGE_NAME='lit-extractor'
-CURRENT_VERSION='0.2'
+CURRENT_VERSION='0.2.4'
 
 def check_for_update():
     try:
@@ -18,10 +16,12 @@ def check_for_update():
         # Compare the current version with the latest version
         if version.parse(latest_version) > version.parse(CURRENT_VERSION):
             console.print(f"\nA new version [green]{latest_version}[/] is available! You have [red]{CURRENT_VERSION}[/].")
-            console.print("Run the following command to update:\n\n")
+            console.print("Run the following command to update:\n")
             console.print(f"\n  pip install --upgrade {PACKAGE_NAME}\n", style="green bold underline")
         else:
-            console.print("\nYou are using the latest version.\n\n", style="green")
+            console.print("\nYou are using the latest version.\n", style="green")
+
+        console.rule()
     except requests.RequestException as e:
         console.print_exception(f"Error checking for update: {e}", err=True)
 
@@ -43,10 +43,15 @@ def url(file, output, download):
         processed_result = prettify_url(result)
         extracted_url.extend(processed_result)
 
-    console.print(f"All the urls in the file [cyan]{file.name}[/] has been processed", style="bold green")
     filename = save_to_file(output, extracted_url)
+    console.print(f"All the urls in the file [cyan]{file.name}[/] has been processed", style="bold green")
+    console.rule()
     if download:
         download_url_from_file(filename)
+
+    val = rich_prompt("\nDo you want to open the file? (y/N) ")
+    if val == 'y' or val == 'Y':
+        open_in_editor(filename)
 
 
 @extract.command()
