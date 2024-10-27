@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='lit-extractor',
-    version='0.1.1',
+    version='0.2',
     author="Munish chandra jha",
     author_email="mcj130101@gmail.com",
     description="A mini script to read a list of url and extract all the url's present in the webpage",
@@ -10,7 +10,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/username/my_project",
     packages=find_packages(),
-    py_modules=['extract'],
+    # py_modules=['extract'],
     install_requires=[
         'click',
         'fanficfare',
