@@ -1,6 +1,0 @@
-Metadata-Version: 2.1
-Name: hello
-Version: 0.1
-Requires-Dist: click
-Requires-Dist: fanficfare
-Requires-Dist: tqdm
