@@ -2,10 +2,33 @@ import click
 from click import prompt
 
 from helper.helper import *
+import requests
+from packaging import version
+
+PACKAGE_NAME='lit-extractor'
+CURRENT_VERSION='0.2'
+
+def check_for_update():
+    try:
+        # Get the latest version from PyPI
+        response = requests.get(f"https://pypi.org/pypi/{PACKAGE_NAME}/json")
+        response.raise_for_status()
+        latest_version = response.json()["info"]["version"]
+
+        # Compare the current version with the latest version
+        if version.parse(latest_version) > version.parse(CURRENT_VERSION):
+            console.print(f"\nA new version [green]{latest_version}[/] is available! You have [red]{CURRENT_VERSION}[/].")
+            console.print("Run the following command to update:\n\n")
+            console.print(f"\n  pip install --upgrade {PACKAGE_NAME}\n", style="green bold underline")
+        else:
+            console.print("\nYou are using the latest version.\n\n", style="green")
+    except requests.RequestException as e:
+        console.print_exception(f"Error checking for update: {e}", err=True)
+
 
 @click.group()
 def extract():
-    pass
+    check_for_update()
 
 
 @extract.command()
