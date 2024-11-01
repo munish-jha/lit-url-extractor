@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='lit-extractor',
-    version='0.2.4',
+    version='0.2.5',
     author="Munish chandra jha",
     author_email="mcj130101@gmail.com",
     description="A mini script to read a list of url and extract all the url's present in the webpage",
@@ -16,7 +16,8 @@ setup(
         'fanficfare',
         'tqdm',
         'requests',
-        'rich'
+        'rich',
+        'packaging'
     ],
     entry_points='''
       [console_scripts]

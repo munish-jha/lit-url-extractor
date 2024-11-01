@@ -4,7 +4,7 @@ import requests
 from packaging import version
 
 PACKAGE_NAME='lit-extractor'
-CURRENT_VERSION='0.2.4'
+CURRENT_VERSION='0.2.5'
 
 def check_for_update():
     try:
